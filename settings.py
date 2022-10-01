@@ -1,4 +1,4 @@
-#defining a class to store and initialize the settings for the alien project
+#defining  class to store and initialize the settings for the alien project
 class Settings:
     def __init__(self):
 
