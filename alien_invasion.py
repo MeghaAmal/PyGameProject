@@ -26,10 +26,18 @@ class AlienInvasion:
     def run_game(self):
     #Start the main loop for the game.
         while True:
+            self._check_events()
+            self._update_screen()
+
+    #included helper method to simplify code on check_events
+    def _check_events(self):  
             # keyboard and mouse events.
             for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
                     sys.exit()
+                    
+    #included helper method to simplify code on screen updates
+    def _update_screen(self):
             # code to include the baackground color to the screen
             self.screen.fill(self.settings.bg_color)
 
