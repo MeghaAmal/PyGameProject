@@ -27,6 +27,8 @@ class AlienInvasion:
     #Start the main loop for the game.
         while True:
             self._check_events()
+            # to update the ships position based on the player's input 
+            self.ship.update()
             self._update_screen()
 
     #included helper method to simplify code on check_events
@@ -35,7 +37,24 @@ class AlienInvasion:
             for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
                     sys.exit()
-                    
+
+                elif event.type == pygame.KEYDOWN:
+                    # to check if right key is pressed
+                    if event.key == pygame.K_RIGHT:
+                        #move the ship to the right
+                        #self.ship.rect.x += 1
+                        #setting the moving_right to TRUE when right arrow key is clicked instead of directly increasing with 1 
+                        self.ship.moving_right =True
+                    elif event.key == pygame.K_LEFT: 
+                        self.ship.moving_left = True
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RIGHT:
+                        #setting the moving_right to FALSE when right arrow key is released
+                         self.ship.moving_right =False
+                    elif event.key == pygame.K_LEFT: 
+                        self.ship.moving_left = False
+                       
+
     #included helper method to simplify code on screen updates
     def _update_screen(self):
             # code to include the baackground color to the screen

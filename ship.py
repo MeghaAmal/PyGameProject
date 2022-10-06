@@ -16,6 +16,17 @@ class Ship:
         # positioning of the ship to the bottom center of the screen 
         self.rect.midbottom = self.screen_rect.midbottom
 
+        #right movement flag
+        self.moving_right = False
+        #left movement flag
+        self.moving_left = False
+
+    #method to change position of ship if Flag is true 
+    def update(self):
+        if self.moving_right:
+            self.rect.x += 1
+        if self.moving_left: 
+            self.rect.x -= 1
     #method to draw the image to the screen position specified by self.rect
     def blitme(self):
         self.screen.blit(self.image, self.rect)
