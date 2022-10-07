@@ -40,6 +40,12 @@ class AlienInvasion:
             # to update the ships position based on the player's input 
             self.ship.update()
             self.bullets.update()
+            #to remove old bullets
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0: 
+                    self.bullets.remove(bullet)
+            #print(len(self.bullets))
+
             self._update_screen()
 
     #included helper method to simplify code on check_events
@@ -91,9 +97,11 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _fire_bullet(self):
-        #Creating  new bullet and adding it to  bullets group
-        new_bullet = Bullet(self) 
-        self.bullets.add(new_bullet)
+        #checking if number of existing bullets before creating a new bullet 
+        if len(self.bullets) < self.settings.bullets_allowed:
+            #Creating  new bullet and adding it to  bullets group
+            new_bullet = Bullet(self) 
+            self.bullets.add(new_bullet)
 
     #included helper method to simplify code on screen updates
     def _update_screen(self):
