@@ -36,6 +36,7 @@ class Ship:
 
         # Update rect object from self.x. 
         self.rect.x = self.x
+    
     #method to draw the image to the screen position specified by self.rect
     def blitme(self):
         self.screen.blit(self.image, self.rect)
