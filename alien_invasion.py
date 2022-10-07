@@ -4,6 +4,8 @@ import pygame
 from settings import Settings
 # import Ship class from ship.py
 from ship import Ship
+# import Bullet class from bullet.py
+from bullet import Bullet
 
 
 #Overall class to manage game assets and behavior.
@@ -29,12 +31,15 @@ class AlienInvasion:
 
         #enabling background color 
         #self.bg_color = (230,230,230)
+        self.bullets = pygame.sprite.Group()
+
     def run_game(self):
     #Start the main loop for the game.
         while True:
             self._check_events()
             # to update the ships position based on the player's input 
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
 
     #included helper method to simplify code on check_events
@@ -73,6 +78,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE: 
+            self._fire_bullet()
 
 
     def _check_keyup_events(self, event): 
@@ -83,6 +90,11 @@ class AlienInvasion:
           elif event.key == pygame.K_LEFT: 
             self.ship.moving_left = False
 
+    def _fire_bullet(self):
+        #Creating  new bullet and adding it to  bullets group
+        new_bullet = Bullet(self) 
+        self.bullets.add(new_bullet)
+
     #included helper method to simplify code on screen updates
     def _update_screen(self):
             # code to include the baackground color to the screen
@@ -90,6 +102,11 @@ class AlienInvasion:
 
             #drawing of ship to the screen to make it appear at top of background
             self.ship.blitme()
+
+            #to draw all fired bullets on screen , bullets.sprites has a list of all sprites in the group bullets
+            for bullet in self.bullets.sprites(): 
+                bullet.draw_bullet()
+
 
             # Make the most recently drawn screen visible.
             pygame.display.flip()
