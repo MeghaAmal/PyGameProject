@@ -37,7 +37,7 @@ class AlienInvasion:
             # to update the ships position based on the player's input 
             self.ship.update()
             self._update_bullets()
-            
+            self._update_aliens()
 
             self._update_screen()
 
@@ -90,6 +90,12 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0: 
                 self.bullets.remove(bullet)
 
+    #Managing  the movement and position of  aliens in  fleet
+    def _update_aliens(self):
+        #check if the fleet is at an edge and then update alien position accordingly
+        self._check_fleet_edges()
+        self.aliens.update()
+
     #Create the fleet of aliens
     def _create_fleet(self):
         # Make an alien and find the number of aliens in a row. 
@@ -124,6 +130,21 @@ class AlienInvasion:
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
+
+    #method to implement if the fleet has reached the edge
+    def _check_fleet_edges(self):
+        for alien in self.aliens.sprites(): 
+            if alien.check_edges():
+                self._change_fleet_direction() 
+                break
+
+    #Drop the entire fleet and change the fleet's direction            
+    def _change_fleet_direction(self):
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed 
+        self.settings.fleet_direction *= -1
+ 
+
 
 
 
