@@ -9,9 +9,10 @@ class Settings:
 
         #setting the speed of ship to 1.5 from 1 pixel on each pass through the loop
         self.ship_speed =1.5
+        self.ship_limit = 3
 
         #Bullet settings
-        self.bullet_speed = 3.0
+        self.bullet_speed = 4.0
         self.bullet_width = 4
         self.bullet_height = 15
         self.bullet_color = (100, 180, 60)
