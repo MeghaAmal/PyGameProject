@@ -40,10 +40,11 @@ class AlienInvasion:
         #Start the main loop for the game.
         while True:
             self._check_events()
-            # to update the ships position based on the player's input 
-            self.ship.update()
-            self._update_bullets()
-            self._update_aliens()
+            if self.stats.game_active:
+                # to update the ships position based on the player's input 
+                self.ship.update()
+                self._update_bullets()
+                self._update_aliens()
 
             self._update_screen()
 
@@ -134,17 +135,20 @@ class AlienInvasion:
         
 
     #Respond to the ship being hit by an alien
-    def _ship_hit(self):    
-        # Decrement ships_left. 
-        self.stats.ships_left -= 1
-        # Emptying remaining aliens and bullets. 
-        self.aliens.empty()
-        self.bullets.empty()
-        # Create a new fleet and center the ship. 
-        self._create_fleet()
-        self.ship.center_ship()
-        # Pausing for 0.5s for the gamer to see the alien has hit the ship
-        sleep(0.5)
+    def _ship_hit(self):
+        if self.stats.ships_left > 0:    
+            # Decrement ships_left. 
+            self.stats.ships_left -= 1
+            # Emptying remaining aliens and bullets. 
+            self.aliens.empty()
+            self.bullets.empty()
+            # Create a new fleet and center the ship. 
+            self._create_fleet()
+            self.ship.center_ship()
+            # Pausing for 0.5s for the gamer to see the alien has hit the ship
+            sleep(0.5)
+        else:
+            self.stats.game_active = False
 
     #Create the fleet of aliens
     def _create_fleet(self):
@@ -155,7 +159,7 @@ class AlienInvasion:
         alien_width, alien_height = alien.rect.size
         # Spacing between each alien is equal to one alien width.
         available_space_x = self.settings.screen_width - (2*alien_width)
-        number_aliens_x = available_space_x // (2*alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
 
         # Determine the number of rows of aliens that fit on the screen.
         ship_height = self.ship.rect.height 
