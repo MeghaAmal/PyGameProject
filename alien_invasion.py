@@ -80,6 +80,8 @@ class AlienInvasion:
             self.stats.reset_stats()
             self.stats.game_active = True
             self.sb.prep_score()
+            self.sb.prep_level()
+            
             # Hide the mouse cursor. 
             pygame.mouse.set_visible(False)
             # Get rid of any remaining aliens and bullets. 
@@ -139,6 +141,7 @@ class AlienInvasion:
             for aliens in collisions.values(): 
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
+            self.sb.check_high_score()
 
         #check if aliens group is empty
         if not self.aliens:
@@ -146,6 +149,10 @@ class AlienInvasion:
             self.bullets.empty() 
             self._create_fleet()
             self.settings.increase_speed()
+
+            # Increase level. 
+            self.stats.level += 1 
+            self.sb.prep_level()
 
     # Managing  the movement and position of  aliens in  fleet
     def _update_aliens(self):
