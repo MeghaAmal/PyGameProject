@@ -1,9 +1,11 @@
 import pygame
-
+from pygame.sprite import Sprite
 #class to define ship's behavior 
-class Ship:
+class Ship(Sprite):
 
     def __init__(self, ai_game):
+        
+        super().__init__()
         self.screen = ai_game.screen
         # settings attribute for ship
         self.settings = ai_game.settings
