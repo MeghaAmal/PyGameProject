@@ -4,6 +4,7 @@ from time import sleep
 import pygame
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -27,8 +28,11 @@ class AlienInvasion:
         # self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height)) 
         pygame.display.set_caption("Alien Invasion") 
 
-        # Create an instance to store game statistics. 
+        # Create an instance to store game statistics
         self.stats = GameStats(self)
+
+        # Create an instance scoreboard
+        self.sb = Scoreboard(self)
 
         #create an instance of Ship class with argument self so as to refer to current instance
         self.ship = Ship(self)
@@ -72,6 +76,7 @@ class AlienInvasion:
         button_clicked = self.play_button.rect.collidepoint(mouse_pos) 
         if button_clicked and not self.stats.game_active:
             # Reset the game statistics. 
+            self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.stats.game_active = True
             # Hide the mouse cursor. 
@@ -134,6 +139,7 @@ class AlienInvasion:
             # Destroy existing bullets and create new fleet.
             self.bullets.empty() 
             self._create_fleet()
+            self.settings.increase_speed()
 
     # Managing  the movement and position of  aliens in  fleet
     def _update_aliens(self):
@@ -240,6 +246,9 @@ class AlienInvasion:
             bullet.draw_bullet()
         #to make the alien appear in screen using group's draw method
         self.aliens.draw(self.screen)
+
+        # Draw the score information. 
+        self.sb.show_score()
 
         # Draw the play button if the game is inactive. 
         if not self.stats.game_active:
