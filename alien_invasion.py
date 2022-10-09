@@ -24,8 +24,6 @@ class AlienInvasion:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
 
-        #method to manually set up the screen width and height 
-        # self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height)) 
         pygame.display.set_caption("Alien Invasion") 
 
         # Create an instance to store game statistics
@@ -72,7 +70,6 @@ class AlienInvasion:
 
     def _check_play_button(self, mouse_pos):
         #Start a new game when the player clicks Play
-        #if self.play_button.rect.collidepoint(mouse_pos):
         button_clicked = self.play_button.rect.collidepoint(mouse_pos) 
         if button_clicked and not self.stats.game_active:
             # Reset the game statistics. 
@@ -184,7 +181,7 @@ class AlienInvasion:
             # Decrement ships_left. 
             self.stats.ships_left -= 1
             self.sb.prep_ships()
-            
+
             # Emptying remaining aliens and bullets. 
             self.aliens.empty()
             self.bullets.empty()
@@ -225,7 +222,6 @@ class AlienInvasion:
     def _create_alien(self, alien_number,row_number):
         #Create an alien and place it in the row.
         alien = Alien(self)
-        #alien_width = alien.rect.width
         alien_width, alien_height = alien.rect.size
         alien.x = alien_width + 2 * alien_width * alien_number
         alien.rect.x = alien.x
@@ -245,8 +241,6 @@ class AlienInvasion:
             alien.rect.y += self.settings.fleet_drop_speed 
         self.settings.fleet_direction *= -1
  
-
-
 
 
     #included helper method to simplify code on screen updates
